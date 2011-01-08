@@ -90,6 +90,7 @@ public class LinkedList{
 			while(p.next != null){
 				if(++c == number){
 					toReturn = p.next;
+					break;
 				}
 				p = p.next;
 			}
@@ -218,11 +219,14 @@ public class LinkedList{
 
 
 	public void createLoop(){
-		head.next.next.next = head;
+		System.out.println("Created Loop At: " + head.next.next.next.next.data);
+		head.next.next.next.next.next = head;
+		//tail.next = head;
 	}
 
 
 	/**
+	  Floyd's cycle detection algorithm.
 	  Tortoise & Hare Algorith Implementation.
 	 **/
 	public boolean detectLoop(){
@@ -230,7 +234,7 @@ public class LinkedList{
 		Node hare = head.next;
 		boolean hasLoop = false;
 		while( hare != null && hare.next != null ){
-			if ( tortoise == hare ){
+			if (tortoise == hare){
 				hasLoop = true;
 				break;
 			}
@@ -239,8 +243,42 @@ public class LinkedList{
 		}
 
 		if(hasLoop)
-			System.out.println("Loop is at element: " +  tortoise.data);
+			System.out.println("Loop is at element: " +  hare.data);
 
+		return hasLoop;
+	}
+
+
+	/**
+	  Brent's loop detection algorithm.
+	 **/
+	public boolean detectLoop2(){
+		Node tortoise = head;
+		Node hare = head;
+		Node prevNode = hare;
+
+		long limit = 2;
+		long step = 1;
+
+		boolean hasLoop = false;
+
+		while (hare != null){
+			prevNode = hare;
+			hare = hare.next;
+			step++;
+
+			if(tortoise == hare){
+				hasLoop = true;
+				System.out.println("Breant's Algorithm. Loop is at: " + prevNode.data);
+				break;
+			}
+
+			if (step == (limit-1)){
+				step = 1;
+				limit *= 2;
+				tortoise = hare;
+			}
+		}
 		return hasLoop;
 	}
 }
