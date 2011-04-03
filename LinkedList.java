@@ -1,3 +1,8 @@
+/**
+ * Simple Implementation of Linked List
+ * data structure in Java.
+ */
+
 public class LinkedList{
 
 	private class Node{
